@@ -44,6 +44,7 @@ namespace AppiumCalculatorTests
             Assert.That(resultField.Text, Is.EqualTo("13"));  
 
         }
+
         [Test]
 
         public void Test_Sum_InvalidNumbers()
@@ -60,6 +61,26 @@ namespace AppiumCalculatorTests
             calcButton.Click();
 
             Assert.That(resultField.Text, Is.EqualTo("error"));
+
+        }
+
+        [TestCase("8", "5", "13")] 
+        [TestCase("8", "bfbfbf", "error")] 
+
+        public void Test_Calculator_DD(string firstValue, string secondValue, string result)
+        {
+            var firstField = driver.FindElementByAccessibilityId("textBoxFirstNum");
+            var secondField = driver.FindElementByAccessibilityId("textBoxSecondNum");
+            var resultField = driver.FindElementByAccessibilityId("textBoxSum");
+            var calcButton = driver.FindElementByAccessibilityId("buttonCalc");
+
+            firstField.Clear();
+            secondField.Clear();
+            firstField.SendKeys(firstValue);
+            secondField.SendKeys(secondValue);
+            calcButton.Click();
+
+            Assert.That(resultField.Text, Is.EqualTo(result));
 
         }
     }
